@@ -3,11 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Projekt_Rezerwacje.ViewModel"
         xmlns:local="clr-namespace:Projekt_Rezerwacje"
         mc:Ignorable="d"
         Title="Rezerwacje" Height="625" Width="800" ResizeMode="NoResize">
-
-    <Grid>
+    <Window.Resources>
+        <vm:Aplication x:Key="aplication"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource aplication}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="3*"/>
@@ -33,7 +36,11 @@
                 </Border>
 
                 <Border Grid.Row="0" Grid.Column="1" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <ComboBox x:Name="ComboBoxHotele" Margin="10"/>
+                    <ComboBox x:Name="ComboBoxHotele" Margin="10"
+                              ItemsSource="{Binding ListOfHotels}"
+                              SelectedItem="{Binding PickedHotel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             
+                              />
                 </Border>
               
 
@@ -60,7 +67,9 @@
                         <Label Content="Szukaj klienta:" Grid.Row="0"/>
                         <TextBox x:Name="TextBoxSzukajKlienta" Grid.Row="1" Margin="3"/>
                         <Button x:Name="ButtonSzukajKlienta" Grid.Row="2" Margin="3" Content="Szukaj"/>
-                        <ListBox x:Name="ListBoxKlienci" Margin="5" FontSize="20" Grid.Row="3"/>
+                        <ListBox x:Name="ListBoxKlienci" Margin="5" FontSize="10" Grid.Row="3"
+                                 ItemsSource="{Binding ListOfClients}"
+                                 />
                     </Grid>
                 </Border>
 
@@ -69,7 +78,10 @@
                 </Border>
 
                 <Border  Grid.Column="1" Grid.Row="2" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <ComboBox x:Name="WyborPakiet" Margin="10"/>
+                    <ComboBox x:Name="WyborPakiet" Margin="10"
+                              ItemsSource="{Binding Packages}"
+                              SelectedItem="{Binding CurrentPackage}"
+                              />
                 </Border>
 
                 <Border  Grid.Column="0" Grid.Row="3" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
@@ -81,11 +93,11 @@
                 </Border>
 
                 <Border Grid.Column="0" Grid.Row="4" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <Label Content="Data:"  Margin="10"/>
+                    <DatePicker x:Name="WyborDatyOd"  Margin="10"/>
                 </Border>
 
                 <Border Grid.Column="1" Grid.Row="4" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <DatePicker x:Name="WyborDaty"  Margin="10"/>
+                    <DatePicker x:Name="WyborDatyDo"  Margin="10"/>
                 </Border>
 
                 <Border Grid.Column="0" Grid.Row="5" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
