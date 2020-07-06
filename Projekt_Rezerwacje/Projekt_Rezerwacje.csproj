@@ -112,7 +112,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Client.cs" />
+    <Compile Include="DAL\Entities\Client.cs" />
+    <Compile Include="DAL\Entities\Hotel.cs" />
+    <Compile Include="DAL\Repositories\ClientRepository.cs" />
+    <Compile Include="DAL\Repositories\HotelRepository.cs" />
+    <Compile Include="Model\Model.cs" />
     <Compile Include="ViewModel\Aplication.cs" />
     <Compile Include="ViewModel\Changed.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
@@ -130,8 +134,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\DataAccess.cs" />
-    <Compile Include="Model\Hotel.cs" />
+    <Compile Include="DAL\DBConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -158,5 +161,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
