@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
-namespace Projekt_Rezerwacje.Model.DAL
+namespace Projekt_Rezerwacje.DAL
 {
     class DataAccess
     {
-        MySqlConnectionStringBuilder connStrBuilder;
+        MySqlConnectionStringBuilder connStrBuilder = new MySqlConnectionStringBuilder();
         MySqlConnection connection;
 
         private static string ALL_HOTELS_QUERY = "SELECT * FROM hotele";
@@ -18,13 +18,25 @@ namespace Projekt_Rezerwacje.Model.DAL
 
         public DataAccess()
         {
-            connStrBuilder = new MySqlConnectionStringBuilder();
-            connStrBuilder.UserID = "recepcjonista";
-            connStrBuilder.Password = "haslo.123";
-            connStrBuilder.Server = "localhost";
-            connStrBuilder.Database = "hotel";
-            connStrBuilder.Port = 3306;
+            connStrBuilder.UserID = Properties.Settings.Default.userID;
+            connStrBuilder.Server = Properties.Settings.Default.server;
+            connStrBuilder.Database = Properties.Settings.Default.database;
+            connStrBuilder.Port = Properties.Settings.Default.port;
+            connStrBuilder.Password = Properties.Settings.Default.paswd;
         }
+
+        private static DBConnection instance = null;
+        public static DBConnection Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new DBConnection();
+                return instance;
+            }
+        }
+
+        public MySqlConnection Connection => new MySqlConnection(connStrBuilder.ToString());
 
         public List<Hotel> AllHotels()
         {

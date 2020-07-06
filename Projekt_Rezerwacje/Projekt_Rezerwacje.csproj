@@ -130,7 +130,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\DAL\DataAccess.cs" />
+    <Compile Include="DAL\DataAccess.cs" />
     <Compile Include="Model\Hotel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
