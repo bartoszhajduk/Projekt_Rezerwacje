@@ -8,6 +8,7 @@ namespace Projekt_Rezerwacje.ViewModel
 {
     using Model;
     using DAL.Entities;
+    using DAL.Repositories;
     using System.Collections.ObjectModel;
 
     class Aplication
@@ -23,7 +24,7 @@ namespace Projekt_Rezerwacje.ViewModel
         public Aplication()
         {
             ListOfClients = model.Clients;
-            ListOfHotels = model.Hotels;
+            ListOfHotels = HotelRepository.GetHotels();
         }
     }
 }

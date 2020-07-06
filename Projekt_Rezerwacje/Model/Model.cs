@@ -13,7 +13,6 @@ namespace Projekt_Rezerwacje.Model
     class Model
     {
         public ObservableCollection<Client> Clients { get; set; } = new ObservableCollection<Client>();
-        public List<Hotel> Hotels { get { return HotelRepository.GetHotels(); } }
 
 
         public Model()
