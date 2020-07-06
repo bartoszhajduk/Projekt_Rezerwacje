@@ -48,12 +48,20 @@
                 <Border Grid.Row="1" Grid.Column="0" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
                     <StackPanel>
                         <Label Content="Imię"/>
-                        <TextBox x:Name="TextBoxImie" Margin="10" FontSize="15"/>
+                        <TextBox x:Name="TextBoxImie" Margin="10" FontSize="15"
+                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                 />
                         <Label Content="Nazwisko"/>
-                        <TextBox x:Name="TextBoxNazwisko" Margin="10" FontSize="15"/>
+                        <TextBox x:Name="TextBoxNazwisko" Margin="10" FontSize="15"
+                                 Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"
+                                 />
                         <Label Content="Telefon"/>
-                        <TextBox x:Name="TextBoxTelefon" Margin="10" FontSize="15"/>
-                        <Button x:Name="ButtonDodajOsobe" Margin="10" Content="Dodaj Osobę"/>
+                        <TextBox x:Name="TextBoxTelefon" Margin="10" FontSize="15"
+                                 Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
+                                 />
+                        <Button x:Name="ButtonDodajOsobe" Margin="10" Content="Dodaj Osobę"
+                                Command="{Binding AddClient}"
+                                />
                     </StackPanel>
                 </Border>
 

@@ -29,6 +29,24 @@ namespace Projekt_Rezerwacje.Model
             foreach (var c in clients)
                 Clients.Add(c);
         }
+
+        public bool IsClientInDataBase(Client client) => Clients.Contains(client);
+
+        public bool AddClient(Client client)
+        {
+            
+            if (!IsClientInDataBase(client))
+            {
+                if (ClientRepository.AddClient(client))
+                {
+                    Clients.Add(client);
+                    return true;
+                }
+            }
+            
+            return false;    
+        }
+
         /*private Telefon ZnajdzTelefonPoId(sbyte id)
         {
             foreach (var t in Telefony)
@@ -77,21 +95,10 @@ namespace Projekt_Rezerwacje.Model
             return osoby;
         }
 
-        public bool CzyOsobaJestJuzWRepozytorium(Osoba osoba) => Osoby.Contains(osoba);
+    
 
 
-        public bool DodajOsobeDoBazy(Osoba osoba)
-        {
-            if (!CzyOsobaJestJuzWRepozytorium(osoba))
-            {
-                if (RepozytoriumOsoby.DodajOsobeDoBazy(osoba))
-                {
-                    Osoby.Add(osoba);
-                    return true;
-                }
-            }
-            return false;
-        }
+    
 
         public bool EdytujOsobeWBazie(Osoba osoba, sbyte idOsoby)
         {

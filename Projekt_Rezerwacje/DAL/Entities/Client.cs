@@ -12,17 +12,17 @@ namespace Projekt_Rezerwacje.DAL.Entities
         public int? ID { set; get; }
         public string Name { set; get; }
         public string LastName { set; get; }
-        public int PhoneNumber { set; get; }
+        public string PhoneNumber { set; get; }
 
         public Client(MySqlDataReader reader)
         {
             ID = int.Parse(reader["id_k"].ToString());
             Name = reader["imię"].ToString();
             LastName = reader["nazwisko"].ToString();
-            PhoneNumber = int.Parse(reader["telefon"].ToString());
+            PhoneNumber = reader["telefon"].ToString();
         }
 
-        public Client(string name, string lastName, int phoneNumber)
+        public Client(string name, string lastName, string phoneNumber)
         {
             ID = null;
             Name = name.Trim();
@@ -42,6 +42,7 @@ namespace Projekt_Rezerwacje.DAL.Entities
         {
             return $"{Name} {LastName} {PhoneNumber}";
         }
+
 
         public string ToInsert()
         {

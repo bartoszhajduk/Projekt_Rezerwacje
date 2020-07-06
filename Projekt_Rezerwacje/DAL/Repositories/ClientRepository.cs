@@ -76,7 +76,7 @@ namespace Projekt_Rezerwacje.DAL.Repositories
                 MySqlCommand command;
                 if (!string.IsNullOrWhiteSpace(Lastname))
                 {
-                    command = new MySqlCommand("SELECT * FROM klienci WHERE NAZWISKO LIKE " + "\"%" + Lastname + "%\"", connection);
+                    command = new MySqlCommand("SELECT * FROM klienci WHERE NAZWISKO LIKE " + "'%" + Lastname + "%'", connection);
                 }
                 else
                 {
