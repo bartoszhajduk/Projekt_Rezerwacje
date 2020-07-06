@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:Projekt_Rezerwacje.ViewModel"
         xmlns:local="clr-namespace:Projekt_Rezerwacje"
         mc:Ignorable="d"
@@ -65,8 +66,12 @@
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <Label Content="Szukaj klienta:" Grid.Row="0"/>
-                        <TextBox x:Name="TextBoxSzukajKlienta" Grid.Row="1" Margin="3"/>
-                        <Button x:Name="ButtonSzukajKlienta" Grid.Row="2" Margin="3" Content="Szukaj"/>
+                        <TextBox x:Name="TextBoxSzukajKlienta" Grid.Row="1" Margin="3"
+                                 Text="{Binding SearchedClient}"
+                                 />
+                        <Button x:Name="ButtonSzukajKlienta" Grid.Row="2" Margin="3" Content="Szukaj"
+                                Command="{Binding SearchClient}"
+                                />
                         <ListBox x:Name="ListBoxKlienci" Margin="5" FontSize="10" Grid.Row="3"
                                  ItemsSource="{Binding ListOfClients}"
                                  />

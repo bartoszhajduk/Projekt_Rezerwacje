@@ -43,6 +43,7 @@ namespace Projekt_Rezerwacje.DAL.Repositories
             return state;
         }
 
+
         public static bool EditClient(Client client, int clientID)
         {
             bool state = false;
@@ -65,6 +66,30 @@ namespace Projekt_Rezerwacje.DAL.Repositories
         {
             //implementacja
             return true;
+        }
+
+        public static List<Client> SearchClient(string Lastname)
+        {
+            List<Client> clients = new List<Client>();
+            using (var connection = DBConnection.Instance.Connection)
+            {
+                MySqlCommand command;
+                if (!string.IsNullOrWhiteSpace(Lastname))
+                {
+                    command = new MySqlCommand("SELECT * FROM klienci WHERE NAZWISKO LIKE " + "\"%" + Lastname + "%\"", connection);
+                }
+                else
+                {
+                    command = new MySqlCommand(ALL_CLIENTS, connection);
+                }
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                    clients.Add(new Client(reader));
+                connection.Close();
+            }
+            
+            return clients;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Projekt_Rezerwacje.DAL.Entities
 {
     class Hotel
     {
-        public int? ID { set; get; }
+        public int ID { set; get; }
         public string Name { set; get; }
 
         public Hotel(MySqlDataReader reader)

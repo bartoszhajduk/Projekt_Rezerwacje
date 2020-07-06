@@ -13,7 +13,7 @@ namespace Projekt_Rezerwacje.Model
     class Model
     {
         public ObservableCollection<Client> Clients { get; set; } = new ObservableCollection<Client>();
-
+        public string SearchedClient { get; set; }
 
         public Model()
         {
@@ -22,7 +22,13 @@ namespace Projekt_Rezerwacje.Model
                 Clients.Add(c);
         }
 
-
+        public void SearchForClient(string SearchedClient)
+        {
+            Clients.Clear();
+            var clients = ClientRepository.SearchClient(SearchedClient);
+            foreach (var c in clients)
+                Clients.Add(c);
+        }
         /*private Telefon ZnajdzTelefonPoId(sbyte id)
         {
             foreach (var t in Telefony)

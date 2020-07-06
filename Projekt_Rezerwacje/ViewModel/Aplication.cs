@@ -10,6 +10,7 @@ namespace Projekt_Rezerwacje.ViewModel
     using DAL.Entities;
     using DAL.Repositories;
     using System.Collections.ObjectModel;
+    using System.Windows.Input;
 
     class Aplication
     {
@@ -20,11 +21,32 @@ namespace Projekt_Rezerwacje.ViewModel
         public Hotel PickedHotel { get; set; }
         public static List<string> Packages { get; } = new List<string> { "premium", "standard", "all inclusive" };
         public string CurrentPackage { set; get; }
+        public string SearchedClient { set; get; }
+        public Client PickedClient { get; set; }
 
         public Aplication()
         {
             ListOfClients = model.Clients;
             ListOfHotels = HotelRepository.GetHotels();
         }
+
+        private ICommand _searchClient = null;
+        public ICommand SearchClient
+        {
+            get
+            {
+                if (_searchClient == null)
+                {
+                    _searchClient = new RelayCommand(
+                        arg => { model.SearchForClient(SearchedClient); },
+                        arg => true
+                     );
+                }
+                return _searchClient;
+            }
+
+        }
+
+
     }
 }

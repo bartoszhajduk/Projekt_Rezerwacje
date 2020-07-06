@@ -13,9 +13,6 @@ namespace Projekt_Rezerwacje.DAL
     {
         MySqlConnectionStringBuilder connStrBuilder = new MySqlConnectionStringBuilder();
 
-        private static string ALL_HOTELS_QUERY = "SELECT * FROM hotele";
-        private static string ALL_CLIENTS_QUERY = "SELECT * FROM klienci";
-
         public DBConnection()
         {
             connStrBuilder.UserID = Properties.Settings.Default.userID;
