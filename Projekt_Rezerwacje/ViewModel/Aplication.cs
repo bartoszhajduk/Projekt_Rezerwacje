@@ -14,7 +14,7 @@ namespace Projekt_Rezerwacje.ViewModel
     {
         private Model model = new Model();
 
-        public ObservableCollection<Hotel> ListOfHotels { get; set; }
+        public List<Hotel> ListOfHotels { get; set; }
         public ObservableCollection<Client> ListOfClients { get; set; }
         public Hotel PickedHotel { get; set; }
         public static List<string> Packages { get; } = new List<string> { "premium", "standard", "all inclusive" };

@@ -13,7 +13,7 @@ namespace Projekt_Rezerwacje.Model
     class Model
     {
         public ObservableCollection<Client> Clients { get; set; } = new ObservableCollection<Client>();
-        public ObservableCollection<Hotel> Hotels { get; set; } = new ObservableCollection<Hotel>();
+        public List<Hotel> Hotels { get { return HotelRepository.GetHotels(); } }
 
 
         public Model()
@@ -21,9 +21,6 @@ namespace Projekt_Rezerwacje.Model
             var clients = ClientRepository.GetClients();
             foreach (var c in clients)
                 Clients.Add(c);
-            var hotels = HotelRepository.GetHotels();
-            foreach (var h in hotels)
-                Hotels.Add(h);
         }
 
 
