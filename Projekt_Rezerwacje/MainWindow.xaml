@@ -7,138 +7,133 @@
         xmlns:vm="clr-namespace:Projekt_Rezerwacje.ViewModel"
         xmlns:local="clr-namespace:Projekt_Rezerwacje"
         mc:Ignorable="d"
-        Title="Rezerwacje" Height="625" Width="800" ResizeMode="NoResize">
+        Title="Rezerwacje" Height="450" Width="800" MinHeight="450" MinWidth="800">
     <Window.Resources>
-        <vm:Aplication x:Key="aplication"/>
+        <vm:MainViewModel x:Key="mainVM"/>
     </Window.Resources>
-    <Grid DataContext="{StaticResource aplication}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
-      
-        <StackPanel Background="AntiqueWhite" Grid.Column="0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="155"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Border Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <Label Content="Hotel:" Margin="10"/>
-                </Border>
-
-                <Border Grid.Row="0" Grid.Column="1" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <ComboBox x:Name="ComboBoxHotele" Margin="10"
-                              ItemsSource="{Binding ListOfHotels}"
-                              SelectedItem="{Binding PickedHotel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             
-                              />
-                </Border>
-              
-
-                <Border Grid.Row="1" Grid.Column="0" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <StackPanel>
-                        <Label Content="Imię"/>
-                        <TextBox x:Name="TextBoxImie" Margin="10" FontSize="15"
-                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                                 />
-                        <Label Content="Nazwisko"/>
-                        <TextBox x:Name="TextBoxNazwisko" Margin="10" FontSize="15"
-                                 Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"
-                                 />
-                        <Label Content="Telefon"/>
-                        <TextBox x:Name="TextBoxTelefon" Margin="10" FontSize="15"
-                                 Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
-                                 />
-                        <Button x:Name="ButtonDodajOsobe" Margin="10" Content="Dodaj Osobę"
-                                Command="{Binding AddClient}"
-                                />
-                    </StackPanel>
-                </Border>
-
-                <Border Grid.Row="1" Grid.Column="1" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
+    
+    <Grid DataContext="{StaticResource mainVM}">
+        <TabControl>
+            <TabItem Header="Rezerwacje">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="25"/>
-                            <RowDefinition Height="25"/>
-                            <RowDefinition Height="25"/>
-                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Label Content="Szukaj klienta:" Grid.Row="0"/>
-                        <TextBox x:Name="TextBoxSzukajKlienta" Grid.Row="1" Margin="3"
-                                 Text="{Binding SearchedClient}"
-                                 />
-                        <Button x:Name="ButtonSzukajKlienta" Grid.Row="2" Margin="3" Content="Szukaj"
-                                Command="{Binding SearchClient}"
-                                />
-                        <ListBox x:Name="ListBoxKlienci" Margin="5" FontSize="10" Grid.Row="3"
-                                 ItemsSource="{Binding ListOfClients}"
-                                 />
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Hotel:" Grid.Row="0" Grid.Column="0"/>
+                        <ComboBox Margin="5" Grid.Column="1" ItemsSource="{Binding ReservationsTabVM.ListOfHotels}"
+                              SelectedItem="{Binding ReservationsTabVM.PickedHotel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Szukaj klienta:" Grid.Row="1" Grid.ColumnSpan="2"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding ReservationsTabVM.SearchedClient}"/>
+                        <Button  Grid.Row="2" Grid.ColumnSpan="2" Margin="5" Content="Szukaj" Command="{Binding ReservationsTabVM.SearchClient}"/>
+                        <ListBox  Margin="5" Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding ReservationsTabVM.ListOfClients}"/>
+                        <Label Content="Pakiet:" Grid.Row="4" Margin="5"/>
+                        <ComboBox Margin="5" Grid.Row="4" Grid.Column="1" 
+                                  ItemsSource="{Binding ReservationsTabVM.Packages}" SelectedItem="{Binding ReservationsTabVM.CurrentPackage}"/>
+                        <Label Content="Pokój:" Grid.Row="5" Margin="5" />
+                        <ListBox  Margin="5" Grid.Column="1" Grid.Row="5"/>
+                        <Label Content="Od:" Grid.Row="6" Margin="5" />
+                        <DatePicker Grid.Row="6" Grid.Column="1" Margin="5"/>
+                        <Label Content="Do:" Grid.Row="7" Margin="5" />
+                        <DatePicker Grid.Row="7" Grid.Column="1" Margin="5"/>
                     </Grid>
-                </Border>
-
-                <Border Grid.Column="0" Grid.Row="2" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <Label Content="Pakiet:" Margin="10"/>
-                </Border>
-
-                <Border  Grid.Column="1" Grid.Row="2" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <ComboBox x:Name="WyborPakiet" Margin="10"
-                              ItemsSource="{Binding Packages}"
-                              SelectedItem="{Binding CurrentPackage}"
-                              />
-                </Border>
-
-                <Border  Grid.Column="0" Grid.Row="3" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <Label Content="Pokoje:" Margin="10"/>
-                </Border>
-
-                <Border Grid.Column="1" Grid.Row="3" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <ListBox x:Name="ListBoxPokoje"  Margin="10" FontSize="20"/>
-                </Border>
-
-                <Border Grid.Column="0" Grid.Row="4" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <DatePicker x:Name="WyborDatyOd"  Margin="10"/>
-                </Border>
-
-                <Border Grid.Column="1" Grid.Row="4" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <DatePicker x:Name="WyborDatyDo"  Margin="10"/>
-                </Border>
-
-                <Border Grid.Column="0" Grid.Row="5" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <Button x:Name="ButtonDodaj" Content="Dodaj" Margin="10"/>
-                </Border>
-
-                <Border Grid.Column="1" Grid.Row="5" Background="AntiqueWhite" BorderBrush="Black" BorderThickness="1">
-                    <Button x:Name="ButtonUsun" Content="Usuń" Margin="10"/>
-                </Border>
-
-
-            </Grid>
-        </StackPanel>
-
-        <Border Grid.Column="1" Background="AntiqueWhite">
-            <StackPanel>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="540"/>
-                        <RowDefinition Height="50"/>
-                    </Grid.RowDefinitions>
-                    <ListBox x:Name="ListBoxRezerwacje" Grid.Row="0" Margin="10" FontSize="20"/>
-                    <Button x:Name="ButtonZakoncz" Grid.Row="1" Content="Zakończ" Margin="10"/>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ListBox x:Name="ListBoxRezerwacje" Grid.ColumnSpan="3" Grid.Row="0" Margin="5"/>
+                        <Button x:Name="ButtonAdd" Grid.Row="1" Grid.Column="0" Content="Dodaj" Margin="5"/>
+                        <Button x:Name="ButtonEdit" Grid.Row="1" Grid.Column="1" Content="Edytuj" Margin="5"/>
+                        <Button x:Name="ButtonDelete" Grid.Row="1" Grid.Column="2" Content="Usuń" Margin="5"/>
+                    </Grid>
                 </Grid>
-            </StackPanel>
-        </Border>
-        
-        
-       
+            </TabItem>
+            <TabItem Header="Klienci" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <Label Content="Imię:" Margin="5"/>
+                        <TextBox x:Name="NameTextBox" Margin="5" Text="{Binding ClientsTabVM.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Nazwisko:" Margin="5"/>
+                        <TextBox x:Name="LastNameTextBox" Margin="5" Text="{Binding ClientsTabVM.LastName, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Telefon:" Margin="5"/>
+                        <TextBox x:Name="PhoneTextBox" Margin="5" Text="{Binding ClientsTabVM.Phone, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        
+                        <ListView x:Name="ClientsListView" Grid.ColumnSpan="3"  
+                              SelectedItem="{Binding ClientsTabVM.CurrentClient}" 
+                              ItemsSource="{Binding ClientsTabVM.ListOfClients}"
+                              SelectedIndex="{Binding ClientsTabVM.SelectedID, Mode=TwoWay}">
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ClientsTabVM.LoadClient}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            
+                            <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Imię" HeaderStringFormat="" x:Name="col1" Width="180"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=LastName}" Header="Nazwisko" x:Name="col2" Width="180"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=PhoneNumber}" Header="Telefon" 
+                                                        Width="{Binding ElementName=helperField, Path=ActualWidth}"/>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                        </ListView>
+
+                        <Grid Visibility="Hidden" Grid.ColumnSpan="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="{Binding ElementName=col1, Path=ActualWidth}"/>
+                                <ColumnDefinition Width="{Binding ElementName=col2, Path=ActualWidth}"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="5"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="2" x:Name="helperField"/>
+                        </Grid>
+                        
+                        <Button x:Name="ButtonAddClient" Grid.Row="1" Grid.Column="0" Content="Dodaj" Margin="5" Command="{Binding ClientsTabVM.AddClient}"/>
+                        <Button x:Name="ButtonEditClient" Grid.Row="1" Grid.Column="1" Content="Edytuj" Margin="5" Command="{Binding ClientsTabVM.EditClient}"/>
+                        <Button x:Name="ButtonDeleteClient" Grid.Row="1" Grid.Column="2" Content="Usuń" Margin="5" Command="{Binding ClientsTabVM.DeleteClient}"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

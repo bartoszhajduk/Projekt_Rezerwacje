@@ -62,10 +62,21 @@ namespace Projekt_Rezerwacje.DAL.Repositories
             return state;
         }
 
-        public static bool DeleteClient(Client osoba)
+        public static bool DeleteClient(int clientID)
         {
-            //implementacja
-            return true;
+            bool state = false;
+            using (var connection = DBConnection.Instance.Connection)
+            {
+                string DELETE_CLIENT = $"DELETE FROM klienci WHERE id_k={clientID}";
+
+                MySqlCommand command = new MySqlCommand(DELETE_CLIENT, connection);
+                connection.Open();
+                var n = command.ExecuteNonQuery();
+                if (n == 1) state = true;
+
+                connection.Close();
+            }
+            return state;
         }
 
         public static List<Client> SearchClient(string Lastname)

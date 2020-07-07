@@ -13,28 +13,31 @@ namespace Projekt_Rezerwacje.Model
     class Model
     {
         public ObservableCollection<Client> Clients { get; set; } = new ObservableCollection<Client>();
+        public ObservableCollection<Client> SearchedClients { get; set; } = new ObservableCollection<Client>();
         public string SearchedClient { get; set; }
 
         public Model()
         {
             var clients = ClientRepository.GetClients();
             foreach (var c in clients)
+            {
                 Clients.Add(c);
+                SearchedClients.Add(c);
+            }
         }
 
         public void SearchForClient(string SearchedClient)
         {
-            Clients.Clear();
+            SearchedClients.Clear();
             var clients = ClientRepository.SearchClient(SearchedClient);
             foreach (var c in clients)
-                Clients.Add(c);
+                SearchedClients.Add(c);
         }
 
         public bool IsClientInDataBase(Client client) => Clients.Contains(client);
 
         public bool AddClient(Client client)
         {
-            
             if (!IsClientInDataBase(client))
             {
                 if (ClientRepository.AddClient(client))
@@ -43,79 +46,37 @@ namespace Projekt_Rezerwacje.Model
                     return true;
                 }
             }
-            
             return false;    
         }
 
-        /*private Telefon ZnajdzTelefonPoId(sbyte id)
+        public bool EditClient(Client client, int clientID)
         {
-            foreach (var t in Telefony)
+            if (ClientRepository.EditClient(client, clientID))
             {
-                if (t.Id == id)
-                    return t;
-            }
-            return null;
-        }
-
-        private Osoba ZnajdzOsobePoId(sbyte id)
-        {
-            foreach (var o in Osoby)
-            {
-                if (o.Id == id)
-                    return o;
-            }
-            return null;
-        }
-
-        public ObservableCollection<Telefon> PobierzTelefonyOsoby(Osoba osoba)
-        {
-            var telefony = new ObservableCollection<Telefon>();
-            foreach (var posiada in Posiadanie)
-            {
-                if (posiada.IdOsoby == osoba.Id)
+                for (int i = 0; i < Clients.Count; i++)
                 {
-                    telefony.Add(ZnajdzTelefonPoId(posiada.IdTelefonu));
-                }
-            }
-
-            return telefony;
-        }
-
-        public ObservableCollection<Osoba> PobierzWlascicieliTelefonu(Telefon telefon)
-        {
-            var osoby = new ObservableCollection<Osoba>();
-            foreach (var posiada in Posiadanie)
-            {
-                if (posiada.IdTelefonu == telefon.Id)
-                {
-                    osoby.Add(ZnajdzOsobePoId(posiada.IdOsoby));
-                }
-            }
-
-            return osoby;
-        }
-
-    
-
-
-    
-
-        public bool EdytujOsobeWBazie(Osoba osoba, sbyte idOsoby)
-        {
-            if (RepozytoriumOsoby.EdytujOsobeWBazie(osoba, idOsoby))
-            {
-                for (int i = 0; i < Osoby.Count; i++)
-                {
-                    if (Osoby[i].Id == idOsoby)
+                    if (Clients[i].ID == clientID)
                     {
-                        osoba.Id = idOsoby;
-                        Osoby[i] = new Osoba(osoba);
+                        client.ID = clientID;
+                        Clients[i] = new Client(client);
                     }
                 }
                 return true;
             }
             return false;
-        }*/
+        }
 
+        internal bool DeleteClient(Client client, int clientID)
+        {
+            if (IsClientInDataBase(client))
+            {
+                if (ClientRepository.DeleteClient(clientID))
+                {
+                    Clients.Remove(client);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

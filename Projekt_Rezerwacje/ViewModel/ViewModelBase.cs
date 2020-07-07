@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Projekt_Rezerwacje.ViewModel
 {
-    class Changed : INotifyPropertyChanged
+    class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
