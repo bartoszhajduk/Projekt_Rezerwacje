@@ -36,6 +36,14 @@ namespace Projekt_Rezerwacje.Model
                 Rooms.Add(r);
         }
 
+        public void GetReservations(int id_p)
+        {
+            Reservations.Clear();
+            var reserv = ReservationRepository.GetReservations(id_p);
+            foreach (var r in reserv)
+                Reservations.Add(r);
+        }
+
         public void SearchForClient(string SearchedClient)
         {
             SearchedClients.Clear();
@@ -45,7 +53,6 @@ namespace Projekt_Rezerwacje.Model
         }
 
         public bool IsClientInDataBase(Client client) => Clients.Contains(client);
-
 
         public bool AddClient(Client client)
         {

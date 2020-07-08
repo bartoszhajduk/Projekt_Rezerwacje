@@ -37,7 +37,7 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Hotel:" Grid.Row="0" Grid.Column="0"/>
                         <ComboBox Margin="5" Grid.Column="1" ItemsSource="{Binding ReservationsTabVM.ListOfHotels}" 
-                                  SelectedItem="{Binding ReservationsTabVM.SelectedHotel}">
+                                  SelectedItem="{Binding ReservationsTabVM.PickedHotel}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding ReservationsTabVM.GetRooms}"/>
@@ -47,8 +47,7 @@
                         <Label Content="Szukaj klienta:" Grid.Row="1" Grid.ColumnSpan="2"/>
                         <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding ReservationsTabVM.SearchedClient}"/>
                         <Button  Grid.Row="2" Grid.ColumnSpan="2" Margin="5" Content="Szukaj" Command="{Binding ReservationsTabVM.SearchClient}"/>
-                        <ListBox  Margin="5" Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding ReservationsTabVM.ListOfClients}" 
-                                  SelectedItem="{Binding ReservationsTabVM.SelectedClient}"/>
+                        <ListBox  Margin="5" Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding ReservationsTabVM.ListOfClients}"/>
                         <Label Content="Pakiet:" Grid.Row="4" Margin="5"/>
                         <ComboBox Margin="5" Grid.Row="4" Grid.Column="1" ItemsSource="{Binding ReservationsTabVM.Packages}"
                                   SelectedItem="{Binding ReservationsTabVM.CurrentPackage}" Text="Wybierz pakiet">
@@ -60,7 +59,7 @@
                         </ComboBox>
                         <Label Content="Pokój:" Grid.Row="5" Margin="5" />
                         <ListBox  Margin="5" Grid.Column="1" Grid.Row="5" ItemsSource="{Binding ReservationsTabVM.ListOfRooms}" 
-                                 SelectedItem="{Binding ReservationsTabVM.SelectedRoom}">
+                                 SelectedItem="{Binding ReservationsTabVM.PickedRoom}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding ReservationsTabVM.GetReservations}"/>
@@ -68,9 +67,9 @@
                             </i:Interaction.Triggers>
                         </ListBox>
                         <Label Content="Od:" Grid.Row="6" Margin="5" />
-                        <DatePicker Grid.Row="6" Grid.Column="1" Margin="5" SelectedDate="{Binding ReservationsTabVM.StartDate}"/>
+                        <DatePicker Grid.Row="6" Grid.Column="1" Margin="5"/>
                         <Label Content="Do:" Grid.Row="7" Margin="5" />
-                        <DatePicker Grid.Row="7" Grid.Column="1" Margin="5" SelectedDate="{Binding ReservationsTabVM.EndDate}"/>
+                        <DatePicker Grid.Row="7" Grid.Column="1" Margin="5"/>
                     </Grid>
                     <Grid Grid.Column="1">
                         <Grid.ColumnDefinitions>
@@ -92,13 +91,13 @@
                                         <GridViewColumn DisplayMemberBinding="{Binding Path=Client.LastName}" Header="Nazwisko" Width="100"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Path=Discount}" Header="Zniżka" Width="70"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Path=Ended}" Header="Zakończono" Width="90"/>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=StartDate, StringFormat=d}" Header="Od" Width="70"/>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=EndDate, StringFormat=d}" Header="Do" Width="70"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=StartDate}" Header="Od" Width="70"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=EndDate}" Header="Do" Width="70"/>
                                     </GridView.Columns>
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <Button x:Name="ButtonAdd" Grid.Row="1" Grid.Column="0" Content="Dodaj" Margin="5" Command="{Binding ReservationsTabVM.AddReservation}"/>
+                        <Button x:Name="ButtonAdd" Grid.Row="1" Grid.Column="0" Content="Dodaj" Margin="5"/>
                         <Button x:Name="ButtonEdit" Grid.Row="1" Grid.Column="1" Content="Edytuj" Margin="5"/>
                         <Button x:Name="ButtonDelete" Grid.Row="1" Grid.Column="2" Content="Usuń" Margin="5" Command="{Binding ReservationsTabVM.DeleteReservation}"/>
                     </Grid>
