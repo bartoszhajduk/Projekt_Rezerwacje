@@ -21,12 +21,13 @@ namespace Projekt_Rezerwacje.ViewModel
         public ObservableCollection<Reservation> ListOfReservations { get; set; }
         public ObservableCollection<Client> ListOfClients { get; set; }
         public ObservableCollection<Room> ListOfRooms { get; set; }
-        public Hotel PickedHotel { get; set; }
+        public Hotel SelectedHotel { get; set; }
         public static List<string> Packages { get; } = new List<string> { "premium", "standard", "all inclusive" };
         public string CurrentPackage { set; get; }
         public string SearchedClient { set; get; }
-        public Client PickedClient { get; set; }
-        public Room PickedRoom { get; set; }
+        public Client SelectedClient { get; set; }
+        public Room SelectedRoom { get; set; }
+        public Room SelectedReservation { get; set; }
 
         public ReservationsTab(Model model)
         {
@@ -35,6 +36,30 @@ namespace Projekt_Rezerwacje.ViewModel
             ListOfHotels = HotelRepository.GetHotels();
             ListOfReservations = model.Reservations;
             ListOfRooms = model.Rooms;
+            StartDate = DateTime.Today;
+            EndDate = DateTime.Today;
+        }
+
+        private DateTime startDate;
+        public DateTime StartDate
+        {
+            get { return startDate; }
+            set
+            {
+                startDate = value;
+                onPropertyChanged(nameof(StartDate));
+            }
+        }
+
+        private DateTime endDate;
+        public DateTime EndDate
+        {
+            get { return endDate; }
+            set
+            {
+                endDate = value;
+                onPropertyChanged(nameof(EndDate));
+            }
         }
 
         private ICommand _searchClient = null;
@@ -61,8 +86,8 @@ namespace Projekt_Rezerwacje.ViewModel
                 if (_getRooms == null)
                 {
                     _getRooms = new RelayCommand(
-                        arg => { model.GetRooms(PickedHotel.ID, CurrentPackage); },
-                        arg => PickedHotel != null && CurrentPackage != null
+                        arg => { model.GetRooms(SelectedHotel.ID, CurrentPackage); },
+                        arg => SelectedHotel != null && CurrentPackage != null
                      );
                 }
                 return _getRooms;
@@ -77,11 +102,38 @@ namespace Projekt_Rezerwacje.ViewModel
                 if (_getReservations == null)
                 {
                     _getReservations = new RelayCommand(
-                        arg => { model.GetReservations((int)PickedRoom.ID); },
-                        arg => PickedRoom != null
+                        arg => { model.GetReservations((int)SelectedRoom.ID); },
+                        arg => SelectedRoom != null
                      );
                 }
                 return _getReservations;
+            }
+        }
+
+        private ICommand _addReservation = null;
+        public ICommand AddReservation
+        {
+            get
+            {
+                if (_addReservation == null)
+                {
+                    _addReservation = new RelayCommand(
+                        arg =>
+                        {
+                            var reservation = new Reservation("F", "F", SelectedClient, StartDate, EndDate);
+
+                            if (model.AddReservation(reservation, (int)SelectedRoom.ID))
+                            {
+                                System.Windows.MessageBox.Show($"Pomyślnie dodano rezerwację do bazy!");
+                                //ClearClient();
+                            }
+                            else
+                                System.Windows.MessageBox.Show($"Rezerwacja jest już w bazie!");
+                        },
+                        arg => SelectedClient != null && SelectedRoom != null
+                     );
+                }
+                return _addReservation;
             }
         }
     }
