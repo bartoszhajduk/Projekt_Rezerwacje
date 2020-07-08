@@ -13,6 +13,7 @@ namespace Projekt_Rezerwacje.Model
     class Model
     {
         public ObservableCollection<Room> Rooms { get; set; } = new ObservableCollection<Room>();
+        public ObservableCollection<Reservation> Reservations { get; set; } = new ObservableCollection<Reservation>();
         public ObservableCollection<Client> Clients { get; set; } = new ObservableCollection<Client>();
         public ObservableCollection<Client> SearchedClients { get; set; } = new ObservableCollection<Client>();
         public string SearchedClient { get; set; }
@@ -30,6 +31,14 @@ namespace Projekt_Rezerwacje.Model
             var rooms = RoomRepository.GetRooms(id_h, package);
             foreach (var r in rooms)
                 Rooms.Add(r);
+        }
+
+        public void GetReservations(int id_p)
+        {
+            Reservations.Clear();
+            var reserv = ReservationRepository.GetReservations(id_p);
+            foreach (var r in reserv)
+                Reservations.Add(r);
         }
 
         public void SearchForClient(string SearchedClient)

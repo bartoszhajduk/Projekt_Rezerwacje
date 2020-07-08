@@ -114,9 +114,11 @@
     </ApplicationDefinition>
     <Compile Include="DAL\Entities\Client.cs" />
     <Compile Include="DAL\Entities\Hotel.cs" />
+    <Compile Include="DAL\Entities\Reservation.cs" />
     <Compile Include="DAL\Entities\Room.cs" />
     <Compile Include="DAL\Repositories\ClientRepository.cs" />
     <Compile Include="DAL\Repositories\HotelRepository.cs" />
+    <Compile Include="DAL\Repositories\ReservationRepository.cs" />
     <Compile Include="DAL\Repositories\RoomRepository.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />

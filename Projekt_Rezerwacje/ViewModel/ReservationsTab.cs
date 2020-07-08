@@ -18,6 +18,7 @@ namespace Projekt_Rezerwacje.ViewModel
         private Model model = null;
 
         public List<Hotel> ListOfHotels { get; set; }
+        public ObservableCollection<Reservation> ListOfReservations { get; set; }
         public ObservableCollection<Client> ListOfClients { get; set; }
         public ObservableCollection<Room> ListOfRooms { get; set; }
         public Hotel PickedHotel { get; set; }
@@ -25,12 +26,14 @@ namespace Projekt_Rezerwacje.ViewModel
         public string CurrentPackage { set; get; }
         public string SearchedClient { set; get; }
         public Client PickedClient { get; set; }
+        public Room PickedRoom { get; set; }
 
         public ReservationsTab(Model model)
         {
             this.model = model;
             ListOfClients = model.SearchedClients;
             ListOfHotels = HotelRepository.GetHotels();
+            ListOfReservations = model.Reservations;
             ListOfRooms = model.Rooms;
         }
 
@@ -63,6 +66,22 @@ namespace Projekt_Rezerwacje.ViewModel
                      );
                 }
                 return _getRooms;
+            }
+        }
+
+        private ICommand _getReservations = null;
+        public ICommand GetReservations
+        {
+            get
+            {
+                if (_getReservations == null)
+                {
+                    _getReservations = new RelayCommand(
+                        arg => { model.GetReservations((int)PickedRoom.ID); },
+                        arg => PickedRoom != null
+                     );
+                }
+                return _getReservations;
             }
         }
     }

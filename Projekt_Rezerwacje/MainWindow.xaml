@@ -58,7 +58,14 @@
                             </i:Interaction.Triggers>
                         </ComboBox>
                         <Label Content="Pokój:" Grid.Row="5" Margin="5" />
-                        <ListBox  Margin="5" Grid.Column="1" Grid.Row="5" ItemsSource="{Binding ReservationsTabVM.ListOfRooms}" />
+                        <ListBox  Margin="5" Grid.Column="1" Grid.Row="5" ItemsSource="{Binding ReservationsTabVM.ListOfRooms}" 
+                                 SelectedItem="{Binding ReservationsTabVM.PickedRoom}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ReservationsTabVM.GetReservations}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ListBox>
                         <Label Content="Od:" Grid.Row="6" Margin="5" />
                         <DatePicker Grid.Row="6" Grid.Column="1" Margin="5"/>
                         <Label Content="Do:" Grid.Row="7" Margin="5" />
@@ -74,7 +81,21 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <ListBox x:Name="ListBoxRezerwacje" Grid.ColumnSpan="3" Grid.Row="0" Margin="5"/>
+                        <ListBox x:Name="ListBoxRezerwacje" Grid.ColumnSpan="3" Grid.Row="0" Margin="5" ItemsSource="{Binding ReservationsTabVM.ListOfReservations}"/>
+                        <ListView x:Name="ReservationListView" Grid.ColumnSpan="3" ItemsSource="{Binding ReservationsTabVM.ListOfReservations}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Client.Name}" Header="Imię" Width="100"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Client.LastName}" Header="Nazwisko" Width="100"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Discount}" Header="Zniżka" Width="70"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Ended}" Header="Zakończono" Width="90"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=StartDate}" Header="Od" Width="70"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=EndDate}" Header="Do" Width="70"/>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
                         <Button x:Name="ButtonAdd" Grid.Row="1" Grid.Column="0" Content="Dodaj" Margin="5"/>
                         <Button x:Name="ButtonEdit" Grid.Row="1" Grid.Column="1" Content="Edytuj" Margin="5"/>
                         <Button x:Name="ButtonDelete" Grid.Row="1" Grid.Column="2" Content="Usuń" Margin="5"/>
@@ -105,8 +126,8 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        
-                        
+
+
                         <ListView x:Name="ClientsListView" Grid.ColumnSpan="3"  
                               SelectedItem="{Binding ClientsTabVM.CurrentClient}" 
                               ItemsSource="{Binding ClientsTabVM.ListOfClients}"
@@ -117,29 +138,18 @@
                                     <i:InvokeCommandAction Command="{Binding ClientsTabVM.LoadClient}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                            
+
                             <ListView.View>
-                            <GridView>
-                                <GridView.Columns>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Imię" HeaderStringFormat="" x:Name="col1" Width="180"/>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=LastName}" Header="Nazwisko" x:Name="col2" Width="180"/>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=PhoneNumber}" Header="Telefon" 
-                                                        Width="{Binding ElementName=helperField, Path=ActualWidth}"/>
-                                </GridView.Columns>
-                            </GridView>
-                        </ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Imię" Width="150"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=LastName}" Header="Nazwisko" Width="150"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=PhoneNumber}" Header="Telefon" Width="150"/>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
                         </ListView>
 
-                        <Grid Visibility="Hidden" Grid.ColumnSpan="3">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="{Binding ElementName=col1, Path=ActualWidth}"/>
-                                <ColumnDefinition Width="{Binding ElementName=col2, Path=ActualWidth}"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="5"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="2" x:Name="helperField"/>
-                        </Grid>
-                        
                         <Button x:Name="ButtonAddClient" Grid.Row="1" Grid.Column="0" Content="Dodaj" Margin="5" Command="{Binding ClientsTabVM.AddClient}"/>
                         <Button x:Name="ButtonEditClient" Grid.Row="1" Grid.Column="1" Content="Edytuj" Margin="5" Command="{Binding ClientsTabVM.EditClient}"/>
                         <Button x:Name="ButtonDeleteClient" Grid.Row="1" Grid.Column="2" Content="Usuń" Margin="5" Command="{Binding ClientsTabVM.DeleteClient}"/>
