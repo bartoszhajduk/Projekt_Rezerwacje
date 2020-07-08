@@ -35,31 +35,6 @@ namespace Projekt_Rezerwacje.Model
                 Rooms.Add(r);
         }
 
-        public void GetReservations(int id_p)
-        {
-            Reservations.Clear();
-            var reserv = ReservationRepository.GetReservations(id_p);
-            foreach (var r in reserv)
-            {
-                Reservations.Add(r);
-            }
-        }
-
-        public bool IsReservationInDataBase(Reservation reservation) => Reservations.Contains(reservation);
-
-        internal bool DeleteReservation(Reservation reservation, int reservationID)
-        {
-            if (IsReservationInDataBase(reservation))
-            {
-                if (ReservationRepository.DeleteReservation(reservationID))
-                {
-                    Reservations.Remove(reservation);
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public void SearchForClient(string SearchedClient)
         {
             SearchedClients.Clear();
@@ -114,6 +89,16 @@ namespace Projekt_Rezerwacje.Model
             return false;
         }
 
+        public void GetReservations(int id_p)
+        {
+            Reservations.Clear();
+            var reserv = ReservationRepository.GetReservations(id_p);
+            foreach (var r in reserv)
+            {
+                Reservations.Add(r);
+            }
+        }
+
         public bool IsReservationInDataBase(Reservation reservation) => Reservations.Contains(reservation);
 
         public bool AddReservation(Reservation reservation, int id_p)
@@ -123,6 +108,19 @@ namespace Projekt_Rezerwacje.Model
                 if (ReservationRepository.AddReservation(reservation, id_p))
                 {
                     Reservations.Add(reservation);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        internal bool DeleteReservation(Reservation reservation, int reservationID)
+        {
+            if (IsReservationInDataBase(reservation))
+            {
+                if (ReservationRepository.DeleteReservation(reservationID))
+                {
+                    Reservations.Remove(reservation);
                     return true;
                 }
             }

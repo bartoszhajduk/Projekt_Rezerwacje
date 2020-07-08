@@ -42,7 +42,7 @@ namespace Projekt_Rezerwacje.DAL.Repositories
                 MySqlCommand command = new MySqlCommand(DELETE_RESERVATION, connection);
                 connection.Open();
                 var n = command.ExecuteNonQuery();
-                if (n == 1) state = true;
+                if (n == 2) state = true;
 
                 connection.Close();
             }
