@@ -67,13 +67,9 @@
                             </i:Interaction.Triggers>
                         </ListBox>
                         <Label Content="Od:" Grid.Row="6" Margin="5" />
-                        <DatePicker x:Name="DataOd" Grid.Row="6" Grid.Column="1" Margin="5" 
-                    
-                                    />
+                        <DatePicker Grid.Row="6" Grid.Column="1" Margin="5"/>
                         <Label Content="Do:" Grid.Row="7" Margin="5" />
-                        <DatePicker x:Name="DataDo" Grid.Row="7" Grid.Column="1" Margin="5"
-                              
-                                    />
+                        <DatePicker Grid.Row="7" Grid.Column="1" Margin="5"/>
                     </Grid>
                     <Grid Grid.Column="1">
                         <Grid.ColumnDefinitions>
@@ -86,7 +82,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <ListBox x:Name="ListBoxRezerwacje" Grid.ColumnSpan="3" Grid.Row="0" Margin="5" ItemsSource="{Binding ReservationsTabVM.ListOfReservations}"/>
-                        <ListView x:Name="ReservationListView" Grid.ColumnSpan="3" ItemsSource="{Binding ReservationsTabVM.ListOfReservations}" SelectedItem="{Binding ReservationsTabVM.PickedReservation}" SelectedIndex="{Binding ReservationsTabVM.SelectedID, Mode=TwoWay}">
+                        <ListView x:Name="ReservationListView" Grid.ColumnSpan="3" ItemsSource="{Binding ReservationsTabVM.ListOfReservations}">
                             <ListView.View>
                                 <GridView>
                                     <GridView.Columns>
@@ -102,7 +98,7 @@
                         </ListView>
                         <Button x:Name="ButtonAdd" Grid.Row="1" Grid.Column="0" Content="Dodaj" Margin="5"/>
                         <Button x:Name="ButtonEdit" Grid.Row="1" Grid.Column="1" Content="Edytuj" Margin="5"/>
-                        <Button x:Name="ButtonDelete" Grid.Row="1" Grid.Column="2" Content="Usuń" Margin="5" Command="{Binding ReservationsTabVM.DeleteReservation}"/>
+                        <Button x:Name="ButtonDelete" Grid.Row="1" Grid.Column="2" Content="Usuń" Margin="5"/>
                     </Grid>
                 </Grid>
             </TabItem>

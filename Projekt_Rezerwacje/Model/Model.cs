@@ -113,20 +113,5 @@ namespace Projekt_Rezerwacje.Model
             }
             return false;
         }
-
-        public bool IsReservationInDataBase(Reservation reservation) => Reservations.Contains(reservation);
-
-        public bool AddReservation(Reservation reservation, int id_p)
-        {
-            if (!IsReservationInDataBase(reservation))
-            {
-                if (ReservationRepository.AddReservation(reservation, id_p))
-                {
-                    Reservations.Add(reservation);
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 }

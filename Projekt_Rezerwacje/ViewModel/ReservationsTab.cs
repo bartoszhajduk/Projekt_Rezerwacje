@@ -12,7 +12,6 @@ namespace Projekt_Rezerwacje.ViewModel
     using System.Collections.ObjectModel;
     using System.Windows.Input;
     using System.Windows;
-    using System.Windows.Controls;
 
     class ReservationsTab : ViewModelBase
     {
@@ -26,22 +25,8 @@ namespace Projekt_Rezerwacje.ViewModel
         public static List<string> Packages { get; } = new List<string> { "premium", "standard", "all inclusive" };
         public string CurrentPackage { set; get; }
         public string SearchedClient { set; get; }
+        public Client PickedClient { get; set; }
         public Room PickedRoom { get; set; }
-        public Reservation PickedReservation { get; set; }
-        private int selectedID = -1;
-        public int SelectedID
-        {
-            get { return selectedID; }
-            set
-            {
-                selectedID = value;
-                onPropertyChanged(nameof(SelectedID));
-            }
-        }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-
-    
 
         public ReservationsTab(Model model)
         {
@@ -50,7 +35,6 @@ namespace Projekt_Rezerwacje.ViewModel
             ListOfHotels = HotelRepository.GetHotels();
             ListOfReservations = model.Reservations;
             ListOfRooms = model.Rooms;
-
         }
 
         private ICommand _searchClient = null;
@@ -98,29 +82,6 @@ namespace Projekt_Rezerwacje.ViewModel
                      );
                 }
                 return _getReservations;
-            }
-        }
-
-        private ICommand _deleteReservation = null;
-        public ICommand DeleteReservation
-        {
-            get
-            {
-                if (_deleteReservation == null)
-                {
-                    _deleteReservation = new RelayCommand(
-                        arg =>
-                        {
-                            if (model.DeleteReservation(PickedReservation, (int)PickedReservation.ID))
-                            {
-                                System.Windows.MessageBox.Show($"Pomyślnie usunięto rezerwację z bazy!");
-                                SelectedID = -1;
-                            }
-                        },
-                        arg => SelectedID > -1
-                     );
-                }
-                return _deleteReservation;
             }
         }
     }
