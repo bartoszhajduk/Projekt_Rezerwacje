@@ -19,7 +19,7 @@ namespace Projekt_Rezerwacje.DAL.Repositories
             string ROOM_RESERVATIONS = "SELECT * FROM rezerwacje, klienci, pokoje_rezerwacje  " +
                 $"WHERE rezerwacje.id_k = klienci.id_k AND rezerwacje.id_r = pokoje_rezerwacje.id_r AND pokoje_rezerwacje.id_p = {id_p}";
 
-            List<Reservation> reservations = new List<Reservation>();
+            List<Reservation> clients = new List<Reservation>();
             using (var connection = DBConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(ROOM_RESERVATIONS, connection);
@@ -49,7 +49,7 @@ namespace Projekt_Rezerwacje.DAL.Repositories
             return state;
         }
 
-        public static bool AddReservation(Reservation reservation, int id_p)
+        public static bool DeleteReservation(int reservationID)
         {
             bool state = false;
             using (var connection = DBConnection.Instance.Connection)
