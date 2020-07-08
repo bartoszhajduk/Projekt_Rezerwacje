@@ -45,20 +45,7 @@ namespace Projekt_Rezerwacje.Model
             }
         }
 
-        public bool IsReservationInDataBase(Reservation reservation) => Reservations.Contains(reservation);
-
-        internal bool DeleteReservation(Reservation reservation, int reservationID)
-        {
-            if (IsReservationInDataBase(reservation))
-            {
-                if (ReservationRepository.DeleteReservation(reservationID))
-                {
-                    Reservations.Remove(reservation);
-                    return true;
-                }
-            }
-            return false;
-        }
+       
 
         public void SearchForClient(string SearchedClient)
         {
@@ -128,5 +115,19 @@ namespace Projekt_Rezerwacje.Model
             }
             return false;
         }
+
+        internal bool DeleteReservation(Reservation reservation, int ReservationID)
+        {
+            if (IsReservationInDataBase(reservation))
+            {
+                if (ReservationRepository.DeleteReservation(ReservationID))
+                {
+                    Reservations.Remove(reservation);
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }
