@@ -9,6 +9,7 @@ namespace Projekt_Rezerwacje.Model
 {
     using DAL.Entities;
     using DAL.Repositories;
+    using System.Windows.Controls;
 
     class Model
     {
@@ -18,6 +19,7 @@ namespace Projekt_Rezerwacje.Model
         public ObservableCollection<Client> SearchedClients { get; set; } = new ObservableCollection<Client>();
         public string SearchedClient { get; set; }
 
+      
         public Model()
         {
             var clients = ClientRepository.GetClients();
@@ -38,8 +40,12 @@ namespace Projekt_Rezerwacje.Model
             Reservations.Clear();
             var reserv = ReservationRepository.GetReservations(id_p);
             foreach (var r in reserv)
+            {
                 Reservations.Add(r);
+            }
         }
+
+       
 
         public void SearchForClient(string SearchedClient)
         {
@@ -50,6 +56,7 @@ namespace Projekt_Rezerwacje.Model
         }
 
         public bool IsClientInDataBase(Client client) => Clients.Contains(client);
+
 
         public bool AddClient(Client client)
         {
@@ -93,5 +100,34 @@ namespace Projekt_Rezerwacje.Model
             }
             return false;
         }
+
+        public bool IsReservationInDataBase(Reservation reservation) => Reservations.Contains(reservation);
+
+        public bool AddReservation(Reservation reservation, int id_p)
+        {
+            if (!IsReservationInDataBase(reservation))
+            {
+                if (ReservationRepository.AddReservation(reservation, id_p))
+                {
+                    Reservations.Add(reservation);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        internal bool DeleteReservation(Reservation reservation, int ReservationID)
+        {
+            if (IsReservationInDataBase(reservation))
+            {
+                if (ReservationRepository.DeleteReservation(ReservationID))
+                {
+                    Reservations.Remove(reservation);
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }
