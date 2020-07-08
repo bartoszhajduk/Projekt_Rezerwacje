@@ -84,7 +84,7 @@
                         </Grid.RowDefinitions>
                         <ListBox x:Name="ListBoxRezerwacje" Grid.ColumnSpan="3" Grid.Row="0" Margin="5" ItemsSource="{Binding ReservationsTabVM.ListOfReservations}"/>
                         <ListView x:Name="ReservationListView" Grid.ColumnSpan="3" ItemsSource="{Binding ReservationsTabVM.ListOfReservations}" 
-                                  SelectedItem="{Binding ReservationsTabVM.SelectedReservation}">
+                                  SelectedItem="{Binding ReservationsTabVM.SelectedReservation}" SelectedIndex="{Binding ReservationsTabVM.SelectedID}">
                             <ListView.View>
                                 <GridView>
                                     <GridView.Columns>

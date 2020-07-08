@@ -28,9 +28,19 @@ namespace Projekt_Rezerwacje.ViewModel
         public string SearchedClient { set; get; }
         public Client SelectedClient { get; set; }
         public Room SelectedRoom { get; set; }
-        public Room SelectedReservation { get; set; }
+        public Reservation SelectedReservation { get; set; }
 
-    
+
+        private int selectedID = -1;
+        public int SelectedID
+        {
+            get { return selectedID; }
+            set
+            {
+                selectedID = value;
+                onPropertyChanged(nameof(SelectedID));
+            }
+        }
 
         public ReservationsTab(Model model)
         {
@@ -150,7 +160,7 @@ namespace Projekt_Rezerwacje.ViewModel
                     _deleteReservation = new RelayCommand(
                         arg =>
                         {
-                            if (model.DeleteReservation(PickedReservation, (int)PickedReservation.ID))
+                            if (model.DeleteReservation(SelectedReservation, (int)SelectedReservation.ID))
                             {
                                 System.Windows.MessageBox.Show($"Pomyślnie usunięto rezerwację z bazy!");
                                 SelectedID = -1;
