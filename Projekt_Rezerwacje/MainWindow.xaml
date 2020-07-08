@@ -36,17 +36,29 @@
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Hotel:" Grid.Row="0" Grid.Column="0"/>
-                        <ComboBox Margin="5" Grid.Column="1" ItemsSource="{Binding ReservationsTabVM.ListOfHotels}"
-                              SelectedItem="{Binding ReservationsTabVM.PickedHotel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <ComboBox Margin="5" Grid.Column="1" ItemsSource="{Binding ReservationsTabVM.ListOfHotels}" 
+                                  SelectedItem="{Binding ReservationsTabVM.PickedHotel}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ReservationsTabVM.GetRooms}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
                         <Label Content="Szukaj klienta:" Grid.Row="1" Grid.ColumnSpan="2"/>
                         <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding ReservationsTabVM.SearchedClient}"/>
                         <Button  Grid.Row="2" Grid.ColumnSpan="2" Margin="5" Content="Szukaj" Command="{Binding ReservationsTabVM.SearchClient}"/>
                         <ListBox  Margin="5" Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding ReservationsTabVM.ListOfClients}"/>
                         <Label Content="Pakiet:" Grid.Row="4" Margin="5"/>
-                        <ComboBox Margin="5" Grid.Row="4" Grid.Column="1" 
-                                  ItemsSource="{Binding ReservationsTabVM.Packages}" SelectedItem="{Binding ReservationsTabVM.CurrentPackage}"/>
+                        <ComboBox Margin="5" Grid.Row="4" Grid.Column="1" ItemsSource="{Binding ReservationsTabVM.Packages}"
+                                  SelectedItem="{Binding ReservationsTabVM.CurrentPackage}" Text="Wybierz pakiet">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ReservationsTabVM.GetRooms}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
                         <Label Content="Pokój:" Grid.Row="5" Margin="5" />
-                        <ListBox  Margin="5" Grid.Column="1" Grid.Row="5"/>
+                        <ListBox  Margin="5" Grid.Column="1" Grid.Row="5" ItemsSource="{Binding ReservationsTabVM.ListOfRooms}" />
                         <Label Content="Od:" Grid.Row="6" Margin="5" />
                         <DatePicker Grid.Row="6" Grid.Column="1" Margin="5"/>
                         <Label Content="Do:" Grid.Row="7" Margin="5" />

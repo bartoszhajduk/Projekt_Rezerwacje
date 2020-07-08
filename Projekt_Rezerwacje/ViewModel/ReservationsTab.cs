@@ -11,6 +11,7 @@ namespace Projekt_Rezerwacje.ViewModel
     using DAL.Repositories;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
+    using System.Windows;
 
     class ReservationsTab : ViewModelBase
     {
@@ -18,22 +19,22 @@ namespace Projekt_Rezerwacje.ViewModel
 
         public List<Hotel> ListOfHotels { get; set; }
         public ObservableCollection<Client> ListOfClients { get; set; }
+        public ObservableCollection<Room> ListOfRooms { get; set; }
         public Hotel PickedHotel { get; set; }
         public static List<string> Packages { get; } = new List<string> { "premium", "standard", "all inclusive" };
         public string CurrentPackage { set; get; }
         public string SearchedClient { set; get; }
         public Client PickedClient { get; set; }
 
-
-        private ICommand _searchClient = null;
-
         public ReservationsTab(Model model)
         {
             this.model = model;
             ListOfClients = model.SearchedClients;
             ListOfHotels = HotelRepository.GetHotels();
+            ListOfRooms = model.Rooms;
         }
 
+        private ICommand _searchClient = null;
         public ICommand SearchClient
         {
             get
@@ -46,6 +47,22 @@ namespace Projekt_Rezerwacje.ViewModel
                      );
                 }
                 return _searchClient;
+            }
+        }
+
+        private ICommand _getRooms = null;
+        public ICommand GetRooms
+        {
+            get
+            {
+                if (_getRooms == null)
+                {
+                    _getRooms = new RelayCommand(
+                        arg => { model.GetRooms(PickedHotel.ID, CurrentPackage); },
+                        arg => PickedHotel != null && CurrentPackage != null
+                     );
+                }
+                return _getRooms;
             }
         }
     }
