@@ -12,6 +12,7 @@ namespace Projekt_Rezerwacje.ViewModel
     using System.Collections.ObjectModel;
     using System.Windows.Input;
     using System.Windows;
+    using System.Windows.Controls;
 
     class ReservationsTab : ViewModelBase
     {
@@ -28,6 +29,8 @@ namespace Projekt_Rezerwacje.ViewModel
         public Client SelectedClient { get; set; }
         public Room SelectedRoom { get; set; }
         public Room SelectedReservation { get; set; }
+
+    
 
         public ReservationsTab(Model model)
         {
@@ -134,6 +137,29 @@ namespace Projekt_Rezerwacje.ViewModel
                      );
                 }
                 return _addReservation;
+            }
+        }
+
+        private ICommand _deleteReservation = null;
+        public ICommand DeleteReservation
+        {
+            get
+            {
+                if (_deleteReservation == null)
+                {
+                    _deleteReservation = new RelayCommand(
+                        arg =>
+                        {
+                            if (model.DeleteReservation(PickedReservation, (int)PickedReservation.ID))
+                            {
+                                System.Windows.MessageBox.Show($"Pomyślnie usunięto rezerwację z bazy!");
+                                SelectedID = -1;
+                            }
+                        },
+                        arg => SelectedID > -1
+                     );
+                }
+                return _deleteReservation;
             }
         }
     }
