@@ -32,6 +32,23 @@ namespace Projekt_Rezerwacje.DAL.Repositories
             return clients;
         }
 
+        public static bool DeleteReservation(int reservationID)
+        {
+            bool state = false;
+            using (var connection = DBConnection.Instance.Connection)
+            {
+                string DELETE_RESERVATION = $"DELETE FROM pokoje_rezerwacje WHERE id_r={reservationID}; DELETE FROM rezerwacje WHERE id_r ={ reservationID}";
+              
+                MySqlCommand command = new MySqlCommand(DELETE_RESERVATION, connection);
+                connection.Open();
+                var n = command.ExecuteNonQuery();
+                if (n == 2) state = true;
+
+                connection.Close();
+            }
+            return state;
+        }
+
         public static bool AddReservation(Reservation reservation, int id_p)
         {
             bool state = false;
