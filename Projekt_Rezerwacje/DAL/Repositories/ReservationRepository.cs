@@ -49,7 +49,7 @@ namespace Projekt_Rezerwacje.DAL.Repositories
             return state;
         }
 
-        public static bool DeleteReservation(int reservationID)
+        public static bool AddReservation(int reservationID)
         {
             bool state = false;
             using (var connection = DBConnection.Instance.Connection)
